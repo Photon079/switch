@@ -41,4 +41,33 @@ access:
       - offline_access
       - read:bitbucket:agent-interface
       - write:bitbucket:agent-interface
-tools: { mode: pass_through }
+tools:
+  mode: listed
+  read:
+    - listBitbucketWorkspaces
+    - getBitbucketWorkspace
+    - listBitbucketRepositories
+    - getBitbucketRepository
+    - getBitbucketRepoDefaultReviewers
+    - getBitbucketRepoFileContent
+    - getBitbucketRepoBranch
+    - getBitbucketRepoCommit
+    - listBitbucketRepoCommitReports
+    - listBitbucketRepoPullRequests
+    - getBitbucketRepoPullRequest
+    - getBitbucketRepoPullRequestDiff
+    - listBitbucketRepoPullRequestComments
+    - listBitbucketRepoPullRequestTasks
+  write:
+    - createBitbucketRepoBranch
+    - createBitbucketRepoCommit
+    - createBitbucketRepoPullRequest
+    - updateBitbucketRepoPullRequest
+    - mergeBitbucketRepoPullRequest
+    - approveBitbucketRepoPullRequest
+    - requestChangesOnBitbucketRepoPullRequest
+    - addBitbucketRepoPullRequestComment
+    - resolveBitbucketRepoPullRequestComment
+    - reopenBitbucketRepoPullRequestComment
+    - createBitbucketRepoPullRequestTask
+    - setBitbucketRepoPullRequestTaskState

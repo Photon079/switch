@@ -204,6 +204,13 @@ def test_the_shipped_bitbucket_entry_signs_in_as_the_spike_found_it_must():
     ]
     assert definition.auth.identity is not None
     assert definition.auth.identity.url == "https://api.atlassian.com/me"
+    assert definition.tools is not None and definition.tools.mode == "listed"
+    assert "listBitbucketRepositories" in (definition.tools.read or [])
+    assert "createBitbucketRepoPullRequest" in (definition.tools.write or [])
+    assert "listBitbucketRepositories" in definition.level_tools("read")
+    assert "createBitbucketRepoPullRequest" not in definition.level_tools("read")
+    assert "createBitbucketRepoPullRequest" in definition.level_tools("write")
+    assert "listBitbucketRepositories" in definition.level_tools("write")
 
 
 @pytest.fixture
@@ -563,8 +570,8 @@ def test_loads_a_static_client_with_its_endpoints(catalog_copy):
         ("kind: pass_through", "kind: minted", "passes the owner's token through"),
         (
             "tools: { mode: pass_through }",
-            "tools: { mode: listed, read: [], write: [] }",
-            "pass through until classified",
+            "tools: { mode: listed, read: [foo], write: [foo] }",
+            "both read and write",
         ),
         (
             "tools: { mode: pass_through }",
